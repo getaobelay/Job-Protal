@@ -1,0 +1,83 @@
+
+
+<nav class="navbar navbar-expand-lg navbar-light">
+    <a class="navbar-brand" href="#">Applicant Tracking System</a>
+    <div class="container-fluid">
+        <ul class="navbar-nav mr-auto">
+
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Jobs</a>
+                </li>
+            {% endif %}
+        
+            <li class="nav-item">
+                <a class="nav-link" href="#">How it works</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="#">Pricing</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav mx-auto">
+            {% if user.is_authenticated %}
+                <li> <a href="{% url 'logout' %}" class="nav-item nav-link">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}" class="nav-item nav-link">Login</a></li>
+                <li><a href="{% url 'register' %}" class="nav-item nav-link">Register</a></li>
+
+            {% endif %}
+        </ul>
+
+        
+    </div>
+</nav>
+
+
+  <section id="FormSection">
+    <div class="container">
+      <!-- card.// -->
+        
+        <div class="d-flex justify-content-center">
+            <div class="d-flex form-area">
+              <form class="inside d-flex" action="{% url 'jobs-result' %}" method="get">
+                    <div class="form-group mr-md-3 mr-0 mb-md-0 mb-3">
+                        <input class="form-control" name='search' aria-label="" placeholder="Skills, company, tag" />
+                    </div>    
+
+                    <div class="form-group mr-md-3 mr-2 mb-md-0 mb-3">
+                        <select class="form-control" name="job_types" aria-label="">
+                            <option>All Categories</option>
+                            <option>Front end developer</option>
+                            <option>Back end developer</option>
+                        </select>
+                    </div>
+                    <div class="form-group mr-md-3 mr-2 mb-md-0 mb-3">
+                        <select class="form-control" name="locations" aria-label="" >
+                            <option>All locations</option>
+                        </select>
+                    </div>
+                    <div class="form-group mr-md-3 mr-0 mb-md-0 mb-3">
+                        <select class="form-control" name="locations" aria-label="" >
+                            <option>All locations</option>
+                        </select>
+                    </div>
+                    <div class="form-group mr-md-3 mr-0 mb-md-0 mb-3">
+                        <select class="form-control" name="locations" aria-label="" >
+                            <option>All locations</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-0">
+                        <button class="btn btn-dark" type="submit" id="search"><i class="fas fa-search"></i> Search</button>
+                    </div>
+                  </form>
+                
+            </div>
+        </div>
+    </div>
+  </section>

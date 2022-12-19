@@ -1,0 +1,83 @@
+{% extends 'main.html' %}
+
+{% load mytemplatetags %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="text-center mb-5">
+        <h3>Jobs openning</h3>
+        <p class="lead">Eros ante urna tortor aliquam nisl magnis quisque hac</p>
+        </div>
+
+        {% for job in jobs %}
+            <div class="card mb-3">
+            <div class="card-body">
+            <div class="d-flex flex-column flex-lg-row">
+                <span class="avatar avatar-text rounded-3 me-4 mb-2"></span>
+                <div class="row flex-fill">
+                <div class="col-sm-5">
+                    <h4 class="h5">{{job.title}}</h4>
+                    <span class="btn btn-primary h-3">{{job.company}}</span>
+                    <span class="badge bg-secondary">{{job.location}}</span>
+                    <span class="btn btn-primary h-1">$60K - $100K</span>
+                </div>
+                <div class="col-sm-4 py-2">
+                    {% for skill in job.skills.all %}
+                        <span class="badge bg-secondary">
+                            {{skill.description}}
+                        </span>
+                    {% endfor %}
+                </div>
+                <div class="col-sm-3 text-lg-end">
+                    <a href="{% url 'job-detail' job.id %}" class="btn btn-sm btn-warning stretched-link">Apply</a>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+                    
+        {% empty %}
+            <h3>No jobs are available.</h3>
+
+        {% endfor %}
+        {% if is_paginated %}
+
+            <div class="d-flex justify-content-center mt-5">
+                <nav aria-label="page navigation">
+                    <ul class="pagination pagination-sm justify-content-center">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?{% param_replace page=1 %}">&laquo; first</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?{% param_replace page=page_obj.previous_page_number%}">previous</a>
+                        </li>            
+                        {% endif %}
+                        {% for page_number in page_obj.number|page_window:page_obj.paginator.num_pages  %}
+                        <li class="page-item {% if page_number == page_obj.number %}active{% endif %}">
+                            <a class="page-link" href="?{% param_replace page=page_number %}">
+                                {{ page_number }} 
+                                {% if page_number == page_obj.number %}
+                                of {{ page_obj.paginator.num_pages }}
+                                {% endif %}
+                            </a>
+                        </li>
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?{% param_replace page=page_obj.next_page_number %}">next</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?{% param_replace page=page_obj.paginator.num_pages %}">last &raquo;</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        {% endif %}
+    </div>
+   
+
+{% endblock content %}
+    
